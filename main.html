@@ -1,0 +1,40 @@
+<!doctype html>
+
+<html>
+  <head>
+    <script src="../react-0.12.2/build/react.js"></script>
+    <script src="../react-0.12.2/build/JSXTransformer.js"></script>
+  </head>
+
+  <body>
+    <div id="c1"> </div>
+    <div id="c2"> </div>
+
+    <!-- REACT component declaration -->
+    <script type="text/jsx" >
+      /** @jsx React.DOM */
+      React.renderComponent(
+         <h1>Hello World from React!</h1>, // component declaration /
+        document.getElementById("c1") // html element to which component above will be mounted
+      )
+    </script>
+    <!-- which is equivalent to -->
+    <script type="text/jsx">
+    /** @jsx React.DOM */
+    var HelloWorldComponent = React.createClass(
+      {
+        render: function() {
+          return (
+            <h2> Hello World from React (via React.createClass) </h2>
+          )
+        }
+      }
+    )
+
+    React.renderComponent(
+      <HelloWorldComponent />,
+      document.getElementById("c2")
+    )
+    </script>
+  </body>
+</html>
