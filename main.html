@@ -10,6 +10,10 @@
     <div id="c1"> </div>
     <div id="c2"> </div>
 
+    ------------------------
+
+    <div id="with_props"></div>
+
     <!-- REACT component declaration -->
     <script type="text/jsx" >
       /** @jsx React.DOM */
@@ -35,6 +39,20 @@
       <HelloWorldComponent />,
       document.getElementById("c2")
     )
+    </script>
+
+    <script type="text/jsx" >
+      /** @jsx React.DOM */
+
+      var ComponentWithProps = React.createClass({
+        render: function() {
+          return(
+            <h3> Hello {this.props.name} </h3>
+          )
+        }
+      })
+
+      React.renderComponent(<ComponentWithProps name='Damian'/>, document.getElementById("with_props"))
     </script>
   </body>
 </html>
