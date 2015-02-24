@@ -14,6 +14,19 @@
 
     <div id="with_props"></div>
 
+    ------------------------
+
+    <div id="with_state_and_props"></div>
+
+    ------------------------
+
+    <div id="counter"></div>
+
+    ------------------------
+
+    <div id="multi_components"></div>
+
+
     <!-- REACT component declaration -->
     <script type="text/jsx" >
       /** @jsx React.DOM */
@@ -47,12 +60,107 @@
       var ComponentWithProps = React.createClass({
         render: function() {
           return(
-            <h3> Hello {this.props.name} </h3>
+            <h3> Props Test; Hello {this.props.name} </h3>
           )
         }
       })
 
       React.renderComponent(<ComponentWithProps name='Damian'/>, document.getElementById("with_props"))
+    </script>
+
+    <script type="text/jsx">
+    /** @jsx React.DOM */
+
+    var ComponentWithBothStateAndProps = React.createClass({
+      getInitialState: function() {
+        return { name: 'Damian' }
+      },
+      render: function() {
+        return (
+          <h4> State and Props Test; Hello {this.state.name} {this.props.surname }! </h4>
+        )
+      }
+    })
+
+    React.renderComponent(<ComponentWithBothStateAndProps surname="Jaszczurowski"/>, document.getElementById("with_state_and_props"))
+    </script>
+
+    <script type="text/jsx">
+    var Counter = React.createClass({
+      getInitialState: function() { return { counter: 0 } },
+      _onClick: function() {
+        this.setState({
+          counter: this.state.counter + 1
+        })
+      },
+      render: function() {
+        return (
+          <div>
+            <h5> Already clicked: {this.state.counter} times </h5>
+            <button type="button" onClick={this._onClick} >Click me</button>
+          </div>
+        )
+      }
+    })
+
+    React.renderComponent(<Counter />, document.getElementById("counter"))
+    </script>
+
+    <script type="text/jsx">
+    /** @jsx React.DOM */
+
+    var List = React.createClass({
+      render: function () {
+        return (
+          <ul>
+          {
+            (this.props.items || []).map(function(item) {
+              return (
+                <li key={item}>{item}</li>
+              )
+            })
+          }
+          </ul>
+        )
+    }});
+
+    var FilteredList = React.createClass({
+      getInitialState: function() {
+        return {
+          allItems: ["Damian", "Joanna", "Rafal"],
+          matchedItems: []
+        }
+      },
+      componentWillMount: function() {
+        this.setState(
+          {
+            allItems: this.state.allItems,
+            matchedItems: this.state.allItems
+          }
+        )
+      },
+      _onInputChange: function(event) {
+        enteredName = event.target.value.toLowerCase();
+
+        this.setState({
+          matchedItems: this.state.allItems.filter(function(item){
+            return item.toLowerCase().indexOf(enteredName) == 0
+          })
+        })
+      },
+      render: function() {
+        return (
+          <div>
+            <input onChange={this._onInputChange}></input>
+            <List items={this.state.matchedItems} />
+          </div>
+        )
+      }
+
+    })
+
+    React.renderComponent(<FilteredList />, document.getElementById("multi_components"))
+
     </script>
   </body>
 </html>
